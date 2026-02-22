@@ -10,12 +10,12 @@
 </head>
 <body class="min-h-screen flex items-center justify-center p-4 animated-bg">
 
-  <div class="w-full max-w-lg space-y-6">
+  <div class="w-full max-w-lg space-y-6 min-w-0">
 
     <h1 class="text-2xl font-bold text-white text-center tracking-wide">Time Zone Converter</h1>
 
     <!-- Subsection 1: Time & Date Selector -->
-    <section class="bg-slate-700/50 backdrop-blur rounded-2xl p-6 shadow-lg border border-slate-600/50">
+    <section class="bg-slate-700/50 backdrop-blur rounded-2xl p-4 sm:p-6 shadow-lg border border-slate-600/50 overflow-hidden">
       <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-4">Reference Time & Date</h2>
       <input
         type="datetime-local"
@@ -26,14 +26,14 @@
     </section>
 
     <!-- Subsection 2: Destination Location -->
-    <section class="bg-slate-700/50 backdrop-blur rounded-2xl p-6 shadow-lg border border-slate-600/50">
+    <section class="bg-slate-700/50 backdrop-blur rounded-2xl p-4 sm:p-6 shadow-lg border border-slate-600/50 overflow-hidden">
       <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-4">Destination Location</h2>
-      <div class="flex gap-2">
+      <div id="search-row" class="flex gap-2 w-full">
         <input
           type="text"
           id="location-input"
-          placeholder="City, zip code, country, or timezone (e.g. Denver, 80501, GMT)"
-          class="flex-1 bg-slate-800 text-white border border-slate-600 rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-slate-500"
+          placeholder="City, zip, country, or timezone"
+          class="flex-1 min-w-0 bg-slate-800 text-white border border-slate-600 rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-slate-500"
         >
         <button
           id="search-btn"
@@ -63,9 +63,9 @@
     </section>
 
     <!-- Subsection 3: Converted Output -->
-    <section class="bg-slate-700/50 backdrop-blur rounded-2xl p-6 shadow-lg border border-slate-600/50">
+    <section class="bg-slate-700/50 backdrop-blur rounded-2xl p-4 sm:p-6 shadow-lg border border-slate-600/50 overflow-hidden">
       <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-4">Converted Time</h2>
-      <div id="output" class="text-2xl sm:text-3xl font-mono text-white text-center py-4">
+      <div id="output" class="text-base sm:text-2xl md:text-3xl font-mono text-white text-center py-4 break-words">
         <span class="text-slate-500">Select a destination</span>
       </div>
       <button

@@ -1,3 +1,28 @@
+/* Global box-sizing and overflow control */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+input, button, section, div {
+  max-width: 92vw;
+}
+
+/* Stack search row when screen is narrow (height/width > 1.9) */
+@media (max-aspect-ratio: 10/19) {
+  #search-row {
+    flex-direction: column;
+  }
+  #search-row #search-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
 /* Animated gradient background */
 .animated-bg {
   background: linear-gradient(-45deg, #0f172a, #1e1b4b, #172554, #0c4a6e, #134e4a, #1e1b4b);
@@ -14,6 +39,11 @@
 }
 
 /* Custom datetime-local input styling */
+input[type="datetime-local"] {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
 input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   filter: invert(1);
   cursor: pointer;
