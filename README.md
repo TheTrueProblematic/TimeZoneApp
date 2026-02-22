@@ -1,6 +1,6 @@
-# Time Zone Converter
+# Half Past Where?
 
-A fast, minimal web app for converting times between time zones. Enter a date and time, search for any destination by city, zip code, country, or timezone abbreviation, and get a cleanly formatted result ready to copy and share.
+A fast, polished web app for converting times between time zones. Enter a date and time, search for any destination by city, zip code, country, or timezone abbreviation, and get a cleanly formatted result ready to copy and share — all set against a dynamic sky that mirrors the time of day outside your window.
 
 ## Features
 
@@ -9,8 +9,36 @@ A fast, minimal web app for converting times between time zones. Enter a date an
 - **Automatic DST handling** - Daylight saving time is resolved correctly for any date
 - **Military time output** - Results formatted as `15:21 MST, Thursday March 5th`
 - **One-click copy** - Copy the converted time as plain text
-- **Responsive design** - Works on desktop and mobile
+- **Responsive design** - Aspect-ratio-based layout that adapts to any screen shape
 - **No accounts or sign-ups** - Just open and use
+- **Dynamic sky background** - Time-aware visuals that change throughout the day
+
+## Dynamic Sky
+
+The background is a living sky that reflects your local time of day, built with 20 hand-tuned color phases and smooth interpolation between them.
+
+| Time of Day | Colors |
+|---|---|
+| Night (9pm - 4am) | Deep inky blacks, dark navies, subtle purple undertones |
+| Pre-dawn (4:30 - 5:30am) | Deep plum and dark violet emerging at the horizon |
+| Dawn (5:30 - 6:30am) | Rich pinks and magentas bleeding upward |
+| Sunrise (6:30 - 7:30am) | Warm oranges, golds, and coral streaks fading to purple above |
+| Early morning (7:30 - 8:30am) | Golden light transitioning into soft blue |
+| Morning (8:30 - 10am) | Clean, brightening light blues |
+| Midday (10am - 2pm) | Vivid sky blues with a soft white glow |
+| Afternoon (2 - 4pm) | Deeper blues with warm undertones |
+| Golden hour (4 - 5:45pm) | Amber and orange horizon with deepening blue sky |
+| Sunset (5:45 - 6:30pm) | Intense reds, corals, and pinks with purple above |
+| Dusk (6:30 - 8pm) | Deep magentas fading to violet and navy |
+| Twilight (8 - 9:30pm) | Last traces of color dissolving into night |
+
+### Visual Effects
+
+- **Twinkling stars** - 120 individually animated stars visible from dusk through dawn, with smooth opacity fade-in/out
+- **Radial accent glows** - Horizon glow that shifts color and position with the sun
+- **Smooth color interpolation** - Background lerps between phases for seamless transitions
+- **Animated gradient layers** - Two overlay layers gently shimmer and drift via CSS keyframes
+- **30-second refresh cycle** - Sky updates automatically so it stays in sync as time passes
 
 ## How It Works
 
