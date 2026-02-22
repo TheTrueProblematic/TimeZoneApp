@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Time Zone Converter</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/luxon@3/build/global/luxon.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 animated-bg">
+
+  <div class="w-full max-w-lg space-y-6">
+
+    <h1 class="text-2xl font-bold text-white text-center tracking-wide">Time Zone Converter</h1>
+
+    <!-- Subsection 1: Time & Date Selector -->
+    <section class="bg-slate-700/50 backdrop-blur rounded-2xl p-6 shadow-lg border border-slate-600/50">
+      <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-4">Reference Time & Date</h2>
+      <input
+        type="datetime-local"
+        id="datetime-input"
+        class="w-full bg-slate-800 text-white border border-slate-600 rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent cursor-text"
+      >
+      <p class="text-xs text-slate-400 mt-2">Your local time zone: <span id="local-tz" class="text-slate-300"></span></p>
+    </section>
+
+    <!-- Subsection 2: Destination Location -->
+    <section class="bg-slate-700/50 backdrop-blur rounded-2xl p-6 shadow-lg border border-slate-600/50">
+      <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-4">Destination Location</h2>
+      <div class="flex gap-2">
+        <input
+          type="text"
+          id="location-input"
+          placeholder="City, zip code, country, or timezone (e.g. Denver, 80501, GMT)"
+          class="flex-1 bg-slate-800 text-white border border-slate-600 rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-slate-500"
+        >
+        <button
+          id="search-btn"
+          class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-5 py-3 rounded-lg transition-colors whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-blue-400"
+        >
+          Search
+        </button>
+      </div>
+      <div id="status-msg" class="text-xs text-slate-400 mt-2 hidden"></div>
+
+      <!-- Confirmation Dialog -->
+      <div id="confirm-dialog" class="hidden mt-4 bg-slate-800 rounded-xl p-4 border border-slate-500/50">
+        <p class="text-slate-200 text-sm" id="confirm-text"></p>
+        <div class="flex gap-3 mt-3">
+          <button id="confirm-yes" class="flex-1 bg-green-600 hover:bg-green-500 text-white font-semibold py-2 rounded-lg transition-colors text-sm">Confirm</button>
+          <button id="confirm-no" class="flex-1 bg-slate-600 hover:bg-slate-500 text-white font-semibold py-2 rounded-lg transition-colors text-sm">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Selected timezone badge -->
+      <div id="selected-tz-badge" class="hidden mt-3">
+        <span class="inline-flex items-center gap-2 bg-blue-600/20 text-blue-300 border border-blue-500/30 rounded-full px-3 py-1 text-sm">
+          <span id="selected-tz-text"></span>
+          <button id="clear-tz" class="hover:text-white transition-colors">&times;</button>
+        </span>
+      </div>
+    </section>
+
+    <!-- Subsection 3: Converted Output -->
+    <section class="bg-slate-700/50 backdrop-blur rounded-2xl p-6 shadow-lg border border-slate-600/50">
+      <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-4">Converted Time</h2>
+      <div id="output" class="text-2xl sm:text-3xl font-mono text-white text-center py-4">
+        <span class="text-slate-500">Select a destination</span>
+      </div>
+      <button
+        id="copy-btn"
+        class="hidden w-full mt-3 bg-slate-600/50 hover:bg-slate-500/50 text-slate-300 hover:text-white font-medium py-2 rounded-lg transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+      >
+        Copy to clipboard
+      </button>
+    </section>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
