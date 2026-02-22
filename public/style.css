@@ -37,19 +37,58 @@ input, button, section, div {
   }
 }
 
-/* Animated gradient background */
+/* Dynamic sky background */
 .animated-bg {
-  background: linear-gradient(-45deg, #0f172a, #1e1b4b, #172554, #0c4a6e, #134e4a, #1e1b4b);
-  background-size: 400% 400%;
-  animation: gradientShift 15s ease infinite;
+  position: relative;
+  background: #0a0a1a;
+  transition: background 2s ease;
+  overflow: hidden;
 }
 
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  25% { background-position: 100% 0%; }
+/* Gradient overlay layer */
+.animated-bg::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  transition: opacity 2s ease;
+  animation: shimmer 12s ease-in-out infinite;
+}
+
+/* Accent glow layer */
+.animated-bg::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.4;
+  transition: opacity 2s ease;
+  animation: drift 20s ease-in-out infinite;
+}
+
+.animated-bg > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Stars canvas sits behind content */
+#stars-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  transition: opacity 1.5s ease;
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
-  75% { background-position: 0% 100%; }
-  100% { background-position: 0% 50%; }
+}
+
+@keyframes drift {
+  0%, 100% { background-position: 20% 80%; }
+  33% { background-position: 80% 20%; }
+  66% { background-position: 50% 60%; }
 }
 
 /* Custom datetime-local input styling */
