@@ -456,6 +456,9 @@
   updateSky();
   setInterval(updateSky, 30000); // update every 30s
 
+  // --- Footer year ---
+  document.getElementById("footer-year").innerText = new Date().getFullYear();
+
   // --- Start ---
   init();
 })();
