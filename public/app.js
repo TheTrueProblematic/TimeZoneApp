@@ -427,6 +427,8 @@
           twinkleSpeed: Math.random() * 0.02 + 0.005,
           twinkleOffset: Math.random() * Math.PI * 2,
           brightness: Math.random() * 0.5 + 0.5,
+          driftX: (Math.random() - 0.5) * 0.15,
+          driftY: (Math.random() - 0.5) * 0.08,
         });
       }
     }
@@ -435,10 +437,24 @@
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       const time = Date.now() / 1000;
       for (const s of stars) {
-        const flicker = Math.sin(time * s.twinkleSpeed * 10 + s.twinkleOffset) * 0.3 + 0.7;
-        const alpha = s.brightness * flicker;
+        // Slow drift movement
+        s.x += s.driftX;
+        s.y += s.driftY;
+
+        // Wrap around edges
+        if (s.x < -5) s.x = canvas.width + 5;
+        if (s.x > canvas.width + 5) s.x = -5;
+        if (s.y < -5) s.y = canvas.height + 5;
+        if (s.y > canvas.height + 5) s.y = -5;
+
+        // Twinkle with varied intensity
+        const flicker = Math.sin(time * s.twinkleSpeed * 10 + s.twinkleOffset) * 0.4 + 0.6;
+        const pulse = Math.sin(time * s.twinkleSpeed * 3 + s.twinkleOffset * 2) * 0.15 + 0.85;
+        const alpha = s.brightness * flicker * pulse;
+        const radius = s.r * (0.9 + Math.sin(time * s.twinkleSpeed * 5 + s.twinkleOffset) * 0.1);
+
         ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.arc(s.x, s.y, radius, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(255, 255, 240, ${alpha})`;
         ctx.fill();
       }
