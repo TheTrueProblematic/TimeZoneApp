@@ -100,10 +100,14 @@ input, button, section, div {
   66% { background-position: 50% 60%; }
 }
 
-/* Custom datetime-local input styling */
+/* Custom datetime-local input styling — min-width:0 overrides
+   the intrinsic minimum width iOS Safari forces on date inputs */
 input[type="datetime-local"] {
+  width: 100%;
+  min-width: 0;
   max-width: 100%;
   box-sizing: border-box;
+  -webkit-appearance: none;
 }
 
 input[type="datetime-local"]::-webkit-calendar-picker-indicator {
