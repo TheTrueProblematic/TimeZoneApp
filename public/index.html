@@ -19,6 +19,26 @@
 </head>
 <body class="min-h-screen flex items-center justify-center p-4 animated-bg">
   <canvas id="stars-canvas"></canvas>
+  <canvas id="weather-canvas"></canvas>
+
+  <!-- Celestial bodies -->
+  <div id="weather-sun"></div>
+  <div id="weather-moon"></div>
+
+  <!-- Gloom overlay - greys out sky for overcast/rain/storm/fog -->
+  <div id="weather-gloom"></div>
+
+  <!-- Cloud layer -->
+  <div id="weather-clouds"></div>
+
+  <!-- Fog overlay -->
+  <div id="weather-fog"></div>
+
+  <!-- Lightning flash -->
+  <div id="weather-lightning"></div>
+
+  <!-- Weather state badge -->
+  <div id="weather-badge"></div>
 
   <div class="w-full max-w-lg space-y-6 min-w-0" style="max-width: min(32rem, 92vw);">
 
@@ -89,7 +109,7 @@
   </div>
 
   <footer class="fixed bottom-0 left-0 w-full text-center py-3" style="z-index: 10;">
-    <a href="https://maximilianmcclelland.com" style="text-decoration: none;" class="rainbow-text text-sm font-medium">
+    <a id="footer-link" href="https://maximilianmcclelland.com" style="text-decoration: none;" class="text-sm font-medium transition-colors duration-1000">
       TrueProblematic &copy; <span id="footer-year"></span>
     </a>
   </footer>

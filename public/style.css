@@ -80,6 +80,15 @@ input, button, section, div {
   transition: opacity 1.5s ease;
 }
 
+/* Weather canvas sits above stars, below content */
+#weather-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  transition: opacity 1s ease;
+}
+
 @keyframes shimmer {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -133,17 +142,241 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   }
 }
 
-/* Rainbow gradient text */
-.rainbow-text {
-  background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #0080ff, #8000ff, #ff0080);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: rainbow-shift 20s linear infinite;
+/* Footer link - weather-themed, always legible */
+#footer-link {
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
-@keyframes rainbow-shift {
-  0% { background-position: 0% center; }
-  100% { background-position: 200% center; }
+/* ========================================
+   WEATHER & CELESTIAL CSS ELEMENTS
+   ======================================== */
+
+/* Sun element - cartoony CSS sun */
+#weather-sun {
+  position: fixed;
+  z-index: 0;
+  pointer-events: none;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff6d5 0%, #ffe066 30%, #ffb833 60%, #ff8c00 100%);
+  box-shadow:
+    0 0 40px 15px rgba(255, 200, 50, 0.5),
+    0 0 80px 30px rgba(255, 160, 30, 0.3),
+    0 0 120px 50px rgba(255, 120, 0, 0.15);
+  transition: top 2s ease, left 2s ease, opacity 1.5s ease, transform 1.5s ease;
+  opacity: 0;
+}
+
+/* Sun rays - rotating dashes */
+#weather-sun::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg, rgba(255,200,50,0.3) 5deg, transparent 10deg,
+    transparent 30deg, rgba(255,200,50,0.3) 35deg, transparent 40deg,
+    transparent 60deg, rgba(255,200,50,0.3) 65deg, transparent 70deg,
+    transparent 90deg, rgba(255,200,50,0.3) 95deg, transparent 100deg,
+    transparent 120deg, rgba(255,200,50,0.3) 125deg, transparent 130deg,
+    transparent 150deg, rgba(255,200,50,0.3) 155deg, transparent 160deg,
+    transparent 180deg, rgba(255,200,50,0.3) 185deg, transparent 190deg,
+    transparent 210deg, rgba(255,200,50,0.3) 215deg, transparent 220deg,
+    transparent 240deg, rgba(255,200,50,0.3) 245deg, transparent 250deg,
+    transparent 270deg, rgba(255,200,50,0.3) 275deg, transparent 280deg,
+    transparent 300deg, rgba(255,200,50,0.3) 305deg, transparent 310deg,
+    transparent 330deg, rgba(255,200,50,0.3) 335deg, transparent 340deg,
+    transparent 360deg
+  );
+  animation: sun-spin 60s linear infinite;
+}
+
+#weather-sun::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff9e6 0%, #ffe88a 50%, transparent 100%);
+}
+
+@keyframes sun-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Moon element - crescent via box-shadow */
+#weather-moon {
+  position: fixed;
+  z-index: 0;
+  pointer-events: none;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow:
+    -12px 4px 0 2px #e8e4d4,
+    0 0 20px 5px rgba(200, 200, 180, 0.15),
+    0 0 50px 15px rgba(200, 200, 180, 0.08);
+  transition: top 2s ease, left 2s ease, opacity 1.5s ease;
+  opacity: 0;
+}
+
+/* Moon craters - subtle detail */
+#weather-moon::after {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(180, 175, 155, 0.3);
+  box-shadow:
+    14px -8px 0 3px rgba(180, 175, 155, 0.2),
+    -4px 12px 0 1px rgba(180, 175, 155, 0.25);
+}
+
+/* Gloom overlay - desaturates and greys out the sky */
+#weather-gloom {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 2s ease, background 2s ease;
+}
+
+/* Cloud container - holds all CSS clouds */
+#weather-clouds {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  transition: opacity 1.5s ease;
+  opacity: 0;
+}
+
+/* Individual cloud - pure CSS puffy cloud */
+.cloud {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  animation: cloud-drift linear infinite;
+}
+
+.cloud::before,
+.cloud::after {
+  content: '';
+  position: absolute;
+  background: inherit;
+  border-radius: 50%;
+}
+
+.cloud::before {
+  width: 65%;
+  height: 80%;
+  top: -40%;
+  left: 15%;
+}
+
+.cloud::after {
+  width: 50%;
+  height: 70%;
+  top: -25%;
+  right: 10%;
+}
+
+/* Night cloud variant - darker, moody */
+.cloud.night {
+  background: rgba(60, 60, 80, 0.6);
+}
+.cloud.night::before,
+.cloud.night::after {
+  background: rgba(60, 60, 80, 0.6);
+}
+
+/* Overcast clouds - denser, greyer */
+.cloud.overcast {
+  background: rgba(160, 160, 170, 0.7);
+}
+.cloud.overcast::before,
+.cloud.overcast::after {
+  background: rgba(160, 160, 170, 0.7);
+}
+
+/* Storm clouds - dark and ominous */
+.cloud.storm {
+  background: rgba(60, 60, 75, 0.8);
+}
+.cloud.storm::before,
+.cloud.storm::after {
+  background: rgba(60, 60, 75, 0.8);
+}
+
+@keyframes cloud-drift {
+  from { transform: translateX(-200px); }
+  to { transform: translateX(calc(100vw + 200px)); }
+}
+
+/* Fog overlay - full screen coverage for realistic fog */
+#weather-fog {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 2s ease;
+  background:
+    linear-gradient(to top,
+      rgba(180, 185, 195, 0.7) 0%,
+      rgba(175, 180, 190, 0.6) 20%,
+      rgba(170, 175, 185, 0.5) 40%,
+      rgba(165, 170, 180, 0.4) 60%,
+      rgba(160, 165, 175, 0.3) 80%,
+      rgba(155, 160, 170, 0.2) 100%
+    );
+  animation: fog-drift 30s ease-in-out infinite alternate;
+}
+
+@keyframes fog-drift {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 10% 5%; }
+}
+
+/* Lightning flash overlay */
+#weather-lightning {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: rgba(255, 255, 255, 0.9);
+  transition: none;
+}
+
+/* Weather status badge - shows current detected weather */
+#weather-badge {
+  position: fixed;
+  bottom: 40px;
+  right: 12px;
+  z-index: 10;
+  background: rgba(30, 30, 50, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 4px 12px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 11px;
+  font-family: monospace;
+  transition: opacity 0.5s ease;
+  cursor: default;
 }

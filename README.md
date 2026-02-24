@@ -1,6 +1,6 @@
 # Half Past Where?
 
-A fast, polished web app for converting times between time zones. Enter a date and time, search for any destination by city, zip code, country, or timezone abbreviation, and get a cleanly formatted result ready to copy and share — all set against a dynamic sky that mirrors the time of day outside your window.
+A fast, polished web app for converting times between time zones. Enter a date and time, search for any destination by city, zip code, country, or timezone abbreviation, and get a cleanly formatted result ready to copy and share — all set against a living sky that mirrors both the time of day and the real weather outside your window.
 
 ## Features
 
@@ -12,6 +12,8 @@ A fast, polished web app for converting times between time zones. Enter a date a
 - **Responsive design** - Aspect-ratio-based layout that adapts to any screen shape
 - **No accounts or sign-ups** - Just open and use
 - **Dynamic sky background** - Time-aware visuals that change throughout the day
+- **Live weather effects** - Auto-detects your location and shows real weather conditions
+- **Cartoony CSS weather** - Sun, moon, clouds, rain, snow, thunderstorms, and fog — all built with pure CSS and canvas, no image assets
 
 ## Dynamic Sky
 
@@ -32,13 +34,76 @@ The background is a living sky that reflects your local time of day, built with 
 | Dusk (6:30 - 8pm) | Deep magentas fading to violet and navy |
 | Twilight (8 - 9:30pm) | Last traces of color dissolving into night |
 
+## Weather System
+
+The site auto-detects your approximate location (via IP) and fetches the current weather conditions (via Open-Meteo). The background responds with visual effects:
+
+| Weather | Visual Effect |
+|---|---|
+| Clear | Full sun/moon, bright sky, twinkling stars at night |
+| Partly Cloudy | A few drifting CSS clouds, slightly dimmed sun |
+| Overcast | Dense grey cloud cover, very dim sun |
+| Rain | Animated rain streaks on canvas, dark clouds |
+| Thunderstorm | Rain + periodic lightning flashes, ominous storm clouds |
+| Snow | Animated falling snowflakes, light ground fog |
+| Fog | Translucent gradient overlay, reduced visibility |
+
 ### Visual Effects
 
-- **Twinkling stars** - 120 individually animated stars visible from dusk through dawn, with smooth opacity fade-in/out
-- **Radial accent glows** - Horizon glow that shifts color and position with the sun
-- **Smooth color interpolation** - Background lerps between phases for seamless transitions
-- **Animated gradient layers** - Two overlay layers gently shimmer and drift via CSS keyframes
-- **30-second refresh cycle** - Sky updates automatically so it stays in sync as time passes
+- **CSS Sun** - Radial gradient circle with rotating conic ray pattern and multi-layer glow, following a parabolic arc across the sky
+- **CSS Moon** - Crescent created with box-shadow technique and subtle crater details, arcing through the night sky
+- **CSS Clouds** - Pure CSS shapes with border-radius, animated drift, and variants for day/night/overcast/storm
+- **Canvas Rain** - 200 individually animated rain streaks with wind angle and varied opacity
+- **Canvas Snow** - 150 snowflakes with sinusoidal wobble, variable size, and gentle drift
+- **Lightning** - Random white-flash overlay with double-flash probability for thunderstorms
+- **Fog** - Multi-stop gradient overlay with gentle drift animation
+- **Twinkling stars** - 120 individually animated stars that dim in cloudy weather and fade at dawn/dusk
+- **30-second refresh cycle** - Sky and weather update automatically
+
+### Weather State Codes
+
+Each visual state is represented internally as a code: `{hour}{letter}`
+
+- **Hour**: 0-23 (military time)
+- **Letter**: Weather condition (assigned sequentially)
+
+| Letter | Weather |
+|---|---|
+| `a` | Clear / Sunny |
+| `b` | Partly Cloudy |
+| `c` | Cloudy / Overcast |
+| `d` | Rain |
+| `e` | Thunderstorm |
+| `f` | Snow |
+| `g` | Fog / Mist |
+
+**Examples**: `14a` = 2pm clear, `3f` = 3am snow, `20d` = 8pm rain, `0a` = midnight clear
+
+### Testing Weather States via Console
+
+Open your browser's Developer Tools (F12) and use these commands in the Console tab:
+
+```js
+// Set a specific state
+setWeatherState("14a")   // 2pm, clear sky
+setWeatherState("22f")   // 10pm, snow
+setWeatherState("6e")    // 6am, thunderstorm
+setWeatherState("15g")   // 3pm, fog
+setWeatherState("12b")   // Noon, partly cloudy
+setWeatherState("0a")    // Midnight, clear
+setWeatherState("20d")   // 8pm, rain
+
+// Check current state
+getWeatherState()
+
+// Return to auto-detected weather
+resetWeather()
+
+// Show full help
+weatherHelp()
+```
+
+The bottom-right corner shows a small badge with the current state code for reference.
 
 ## How It Works
 
@@ -66,6 +131,8 @@ The background is a living sky that reflects your local time of day, built with 
 | Date/Time | [Luxon](https://moment.github.io/luxon/) (CDN) |
 | Geocoding | [Nominatim / OpenStreetMap](https://nominatim.openstreetmap.org) |
 | Timezone lookup | [TimeAPI.io](https://timeapi.io) |
+| IP Geolocation | [ip-api.com](http://ip-api.com) |
+| Weather | [Open-Meteo](https://open-meteo.com) |
 | Hosting | [Firebase Hosting](https://firebase.google.com/products/hosting) |
 | Domain/DNS | [Cloudflare](https://cloudflare.com) |
 
