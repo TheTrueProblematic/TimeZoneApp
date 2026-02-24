@@ -9,7 +9,7 @@ html, body {
 }
 
 input, button, section, div {
-  max-width: 92vw;
+  max-width: 100%;
 }
 
 /* Site title */
